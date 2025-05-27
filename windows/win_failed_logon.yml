@@ -1,0 +1,20 @@
+title: Failed Logon Attempt
+id: 97f1f05a-891a-4a0e-a99e-38ffb6a4a2df
+description: Detects multiple failed logon attempts on a single host in a short time window
+status: experimental
+logsource:
+  product: windows
+  service: security
+  category: authentication
+detection:
+  selection:
+    EventID: 4625
+  condition: selection
+fields:
+  - TargetUserName
+  - IpAddress
+falsepositives:
+  - Legitimate failed login attempts (mistyped password)
+level: medium
+tags:
+  - attack.brute_force
