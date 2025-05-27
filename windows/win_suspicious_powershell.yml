@@ -1,0 +1,20 @@
+title: Suspicious PowerShell with Network Access
+id: a05eecf3-6d23-4a17-84b6-9fd93aa563ab
+description: Detects PowerShell usage that includes download or remote invocation
+status: experimental
+logsource:
+  product: windows
+  service: powershell
+detection:
+  selection:
+    ScriptBlockText|contains:
+      - "Invoke-WebRequest"
+      - "Invoke-Expression"
+      - "DownloadString"
+  condition: selection
+falsepositives:
+  - Admin scripts that download internal tools
+level: high
+tags:
+  - attack.execution
+  - attack.t1059.001
