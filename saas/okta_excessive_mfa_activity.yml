@@ -1,0 +1,22 @@
+title: Repeated Okta MFA Enrollment Activity
+id: e0d7e74c-19ab-4f03-b361-bd65e4183cf8
+description: Detects excessive MFA enrollment actions in a short period, which could indicate an attacker rotating or deleting factors to maintain access.
+status: test
+logsource:
+  product: okta
+  service: mfa
+detection:
+  selection:
+    eventType|in:
+      - "user.mfa.factor.enroll"
+      - "user.mfa.factor.update"
+      - "user.mfa.factor.delete"
+  condition: selection | count() by actor.id > 3 within 5m
+falsepositives:
+  - Users switching phones/devices
+  - Large onboarding events
+level: medium
+tags:
+  - attack.credential_access
+  - attack.t1556.006
+  - attack.persistence
