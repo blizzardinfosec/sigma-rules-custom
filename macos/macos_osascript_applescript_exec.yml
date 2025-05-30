@@ -1,0 +1,21 @@
+title: Execution of AppleScript via osascript
+id: 9bde3b98-6e4c-4ccf-9fc7-70c10fdbdf3f
+description: Detects AppleScript being executed from terminal using `osascript`, which is used by malware and red teams for GUI automation or evasion.
+status: stable
+logsource:
+  product: macos
+  service: process
+detection:
+  selection:
+    Image|endswith: '/osascript'
+    CommandLine|contains:
+      - '-e'
+      - 'tell application'
+  condition: selection
+falsepositives:
+  - Automation tools or accessibility workflows
+level: medium
+tags:
+  - attack.execution
+  - attack.t1059.002
+  - platform.macos
