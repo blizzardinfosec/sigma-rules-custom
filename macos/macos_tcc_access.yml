@@ -1,0 +1,24 @@
+title: Unauthorized Access to macOS TCC Database
+id: 7cc5c52a-67a0-4873-aeeb-f1cd34d3f84e
+description: Detects access or modification of the Transparency, Consent, and Control (TCC) database, which governs app permissions—an advanced tactic used by spyware and post-exploitation frameworks.
+status: experimental
+logsource:
+  product: macos
+  service: file_event
+detection:
+  selection:
+    TargetFilePath|contains:
+      - '/Library/Application Support/com.apple.TCC/TCC.db'
+      - '~/Library/Application Support/com.apple.TCC/TCC.db'
+    AccessType: 
+      - 'write'
+      - 'modify'
+  condition: selection
+falsepositives:
+  - Backup or migration tools with elevated privileges
+level: critical
+tags:
+  - attack.defense_evasion
+  - attack.privilege_escalation
+  - attack.t1547
+  - platform.macos
