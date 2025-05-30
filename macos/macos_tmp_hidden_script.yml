@@ -1,0 +1,22 @@
+title: macOS Hidden Script Executed from /tmp or /var
+id: 8f25d1b3-1b9c-4c8b-a2b3-5d77fe65cb18
+description: Detects execution of a hidden script (starts with a dot) from a temporary directory—a common behavior of malware droppers or post-exploitation payloads.
+status: experimental
+logsource:
+  product: macos
+  service: process
+detection:
+  selection:
+    Image|endswith: '.sh'
+    CommandLine|contains:
+      - '/tmp/.'
+      - '/private/tmp/.'
+      - '/var/tmp/.'
+  condition: selection
+falsepositives:
+  - Developer or sysadmin automation scripts
+level: high
+tags:
+  - attack.execution
+  - attack.t1059.004
+  - platform.macos
