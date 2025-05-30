@@ -1,0 +1,22 @@
+title: Keychain Dump Attempt via macOS Security CLI
+id: 310fe9dc-83b1-4569-b257-5fc4dc1a6ec8
+description: Detects use of the `security` command-line tool to dump keychain secrets, often used in credential access or recon stages.
+status: test
+logsource:
+  product: macos
+  service: process
+detection:
+  selection:
+    Image|endswith: '/security'
+    CommandLine|contains:
+      - 'find-generic-password'
+      - 'find-internet-password'
+      - '-g'
+  condition: selection
+falsepositives:
+  - Admins querying stored Wi-Fi or app credentials
+level: high
+tags:
+  - attack.credential_access
+  - attack.t1555.001
+  - platform.macos
