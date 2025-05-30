@@ -1,0 +1,25 @@
+title: Archive Utility Used on Large Directory
+id: 39a58f94-c57e-4452-b2f9-5cf3e1a122d2
+description: Detects built-in archiving tools used against system or document folders, often a precursor to exfiltration or ransomware.
+status: test
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  selection:
+    Image|endswith:
+      - '\\tar.exe'
+      - '\\makecab.exe'
+      - '\\compact.exe'
+    CommandLine|contains:
+      - '\\Users'
+      - '\\Documents'
+      - '\\Downloads'
+  condition: selection
+falsepositives:
+  - Admins manually archiving files
+level: medium
+tags:
+  - attack.collection
+  - attack.t1560
