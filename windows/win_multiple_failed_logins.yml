@@ -1,0 +1,19 @@
+title: Multiple Failed Login Attempts from Single IP
+id: 223e4567-e89b-12d3-a456-426614174001
+status: test
+description: Detects multiple failed login attempts from the same IP address, which may indicate a brute-force attack.
+author: Your Name
+date: 2025-05-29
+tags:
+  - attack.credential_access
+  - attack.t1110
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4625
+  condition: selection | count(ip) by src_ip > 5 within 5m
+falsepositives:
+  - Users entering wrong passwords
+level: medium
