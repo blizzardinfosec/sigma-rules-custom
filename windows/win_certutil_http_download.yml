@@ -1,0 +1,23 @@
+title: Certutil Used to Fetch Remote Payload
+id: 4ed3b2f0-5ff1-4ed3-b8fc-e3880a0b7ef4
+description: Detects use of certutil.exe with a URL in the command line, commonly used for downloading payloads.
+status: stable
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  selection:
+    Image|endswith: '\\certutil.exe'
+    CommandLine|contains:
+      - 'http'
+      - 'ftp'
+      - '-urlcache'
+  condition: selection
+falsepositives:
+  - Rare use by forensic analysts or devops
+level: high
+tags:
+  - attack.command_and_control
+  - attack.t1105
+  - lolbas
