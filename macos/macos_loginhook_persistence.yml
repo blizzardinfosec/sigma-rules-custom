@@ -1,0 +1,22 @@
+title: LoginHook/LogoutHook Persistence Modification
+id: d7d50fc9-3b75-4700-bdc4-e6ffcf47e839
+description: Detects use of the deprecated but still functional macOS LoginHook or LogoutHook to persist malicious scripts.
+status: experimental
+logsource:
+  product: macos
+  service: process
+detection:
+  selection:
+    Image|endswith: '/defaults'
+    CommandLine|contains:
+      - 'com.apple.loginwindow'
+      - 'LoginHook'
+      - 'LogoutHook'
+  condition: selection
+falsepositives:
+  - Legacy enterprise tools or MDM config
+level: high
+tags:
+  - attack.persistence
+  - attack.t1547.001
+  - platform.macos
