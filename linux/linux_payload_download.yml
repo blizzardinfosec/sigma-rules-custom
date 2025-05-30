@@ -1,0 +1,28 @@
+title: Linux Download of Remote Payload via Curl or Wget
+id: c2fd98c1-f1db-4767-91dc-72e0c660ec1e
+description: Detects suspicious use of curl or wget to retrieve a remote file, especially with output flags or to hidden locations.
+status: stable
+logsource:
+  product: linux
+  service: auditd
+  category: process_creation
+detection:
+  selection:
+    Image|endswith:
+      - '/curl'
+      - '/wget'
+    CommandLine|contains:
+      - 'http'
+      - 'ftp'
+      - '-O'
+      - '/tmp/'
+      - '/dev/shm/'
+  condition: selection
+falsepositives:
+  - Admin download tasks
+  - Cron-based package updaters
+level: medium
+tags:
+  - attack.command_and_control
+  - attack.t1105
+  - platform.linux
