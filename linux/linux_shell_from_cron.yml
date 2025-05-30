@@ -1,0 +1,27 @@
+title: Shell Spawned by Cron or System Binary
+id: 0f9bff1b-13ad-41ec-b31d-607ae44f3fe5
+description: Detects a shell being spawned from an unusual parent, such as a cron job or low-level binary, suggesting a backdoor or injected script.
+status: experimental
+logsource:
+  product: linux
+  service: auditd
+  category: process_creation
+detection:
+  selection:
+    Image|endswith:
+      - '/bash'
+      - '/sh'
+    ParentImage|endswith:
+      - '/cron'
+      - '/atd'
+      - '/init'
+      - '/sbin/init'
+  condition: selection
+falsepositives:
+  - Misconfigured crontabs or cleanup scripts
+level: high
+tags:
+  - attack.persistence
+  - attack.execution
+  - attack.t1053.003
+  - platform.linux
