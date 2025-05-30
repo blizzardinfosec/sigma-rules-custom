@@ -1,0 +1,21 @@
+title: macOS LaunchAgent Persistence by Non-Root User
+id: f4aa0d45-b317-4922-9082-8acbbde04815
+description: Detects creation of a LaunchAgent plist in a user context, which is a common persistence mechanism on macOS.
+status: stable
+logsource:
+  product: macos
+  service: file_event
+detection:
+  selection:
+    TargetFilePath|contains:
+      - '/Library/LaunchAgents/'
+      - '~/Library/LaunchAgents/'
+    TargetFileName|endswith: '.plist'
+  condition: selection
+falsepositives:
+  - Legitimate third-party user applications
+level: medium
+tags:
+  - attack.persistence
+  - attack.t1543.001
+  - platform.macos
