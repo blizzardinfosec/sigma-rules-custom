@@ -1,0 +1,22 @@
+title: Suspicious WMI Process Launch Chain
+id: 6f14b6a4-9f74-4e89-91fc-fdea013b2a1e
+description: Detects process launch via WMI (wmiprvse.exe spawning powershell/cmd), a known attacker tactic to evade direct parent-child relationships.
+status: experimental
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  selection:
+    ParentImage|endswith: '\\wmiprvse.exe'
+    Image|endswith:
+      - '\\powershell.exe'
+      - '\\cmd.exe'
+  condition: selection
+falsepositives:
+  - Legitimate WMI-based enterprise scripts
+level: high
+tags:
+  - attack.execution
+  - attack.t1047
+  - attack.t1059
