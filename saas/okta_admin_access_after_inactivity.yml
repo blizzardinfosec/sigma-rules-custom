@@ -1,0 +1,22 @@
+title: Okta Admin Panel Access After Extended Inactivity
+id: 13abf20b-df5d-4f76-8c0a-b29379eab947
+description: Detects a user accessing the Okta admin dashboard after an extended period of account inactivity—often a sign of a compromised stale account being abused.
+status: experimental
+logsource:
+  product: okta
+  service: application
+detection:
+  selection:
+    eventType: "app.session.start"
+    targetApp: "Okta Admin Console"
+  filter:
+    actor.inactivityPeriodDays|gte: 30
+  condition: selection and filter
+falsepositives:
+  - Reactivated users with admin privileges
+  - Admins returning from long leave
+level: high
+tags:
+  - attack.persistence
+  - attack.privilege_escalation
+  - attack.t1078
