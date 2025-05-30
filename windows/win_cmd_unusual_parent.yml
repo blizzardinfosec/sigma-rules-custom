@@ -1,0 +1,23 @@
+title: Unusual Parent Process for cmd.exe
+id: 323e4567-e89b-12d3-a456-426614174002
+status: experimental
+description: Detects instances where cmd.exe is spawned by uncommon parent processes, which may indicate malicious activity.
+author: Your Name
+date: 2025-05-29
+tags:
+  - attack.execution
+  - attack.t1059
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    ParentImage|endswith: 
+      - "\\winword.exe"
+      - "\\excel.exe"
+      - "\\outlook.exe"
+    Image|endswith: "\\cmd.exe"
+  condition: selection
+falsepositives:
+  - Legitimate macros or scripts
+level: high
