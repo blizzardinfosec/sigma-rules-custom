@@ -1,0 +1,21 @@
+title: Okta OAuth Consent Without Login Activity
+id: a3378d1c-0217-4cf4-910d-2c84fc93fa4a
+description: Detects OAuth app grants made without a preceding interactive login—suggests token-based abuse or phishing via malicious OAuth apps.
+status: test
+logsource:
+  product: okta
+  service: authentication
+detection:
+  selection:
+    eventType: "user.oauth2.grant"
+  filter:
+    authenticationContext.authenticationMethod: "none"
+  condition: selection and filter
+falsepositives:
+  - Background service token refresh
+  - Legitimate app authorizations on mobile
+level: high
+tags:
+  - attack.persistence
+  - attack.credential_access
+  - attack.t1528
