@@ -1,0 +1,19 @@
+title: AppleScript Clipboard Access
+id: 2c5d302b-2ae0-47f0-a118-94dc8de5ea77
+description: Detects attempts to access the clipboard using AppleScript, possibly for password stealing or data collection.
+status: experimental
+logsource:
+  product: macos
+  service: process
+detection:
+  selection:
+    Image|endswith: '/osascript'
+    CommandLine|contains: 'clipboard'
+  condition: selection
+falsepositives:
+  - Accessibility tools or automation
+level: high
+tags:
+  - attack.collection
+  - attack.t1115
+  - platform.macos
