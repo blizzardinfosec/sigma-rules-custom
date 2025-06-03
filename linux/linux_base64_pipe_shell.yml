@@ -1,0 +1,22 @@
+title: Suspicious Base64 Decode in Shell
+id: 1a1dff82-3c0a-4ed9-980e-189a3cd2531a
+description: Detects use of base64 and bash in the same execution line, which may indicate obfuscated shell payloads.
+status: test
+logsource:
+  product: linux
+  service: auditd
+  category: process_creation
+detection:
+  selection:
+    CommandLine|contains:
+      - 'base64'
+      - '| bash'
+      - '|sh'
+  condition: selection
+falsepositives:
+  - Dev tools or automation testing
+level: medium
+tags:
+  - attack.obfuscation
+  - attack.t1140
+  - platform.linux
