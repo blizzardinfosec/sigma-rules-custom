@@ -1,0 +1,21 @@
+title: Kubectl Exec Into Pod Detected
+id: b89a1e45-2b1a-4eb8-89d6-8655aef84de4
+description: Detects usage of `kubectl exec` which gives shell access to a running container—often abused by attackers post-compromise.
+status: stable
+logsource:
+  category: application
+  product: kubernetes
+detection:
+  selection:
+    verb: 'create'
+    objectRef.resource: 'pods/exec'
+    user.username|endswith: '@example.com'  # Customize this if needed
+  condition: selection
+falsepositives:
+  - Devs debugging workloads
+  - CI/CD actions
+level: medium
+tags:
+  - attack.execution
+  - attack.t1059.004
+  - platform.kubernetes
