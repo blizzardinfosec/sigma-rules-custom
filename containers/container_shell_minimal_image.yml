@@ -1,0 +1,26 @@
+title: Shell Launched in Minimal Container
+id: 1f77db34-2a6a-4992-89d4-27943a292ba9
+description: Detects unexpected `/bin/sh`, `ash`, or `bash` spawned inside containers that are usually non-interactive (like `nginx`, `alpine`, or `redis`).
+status: experimental
+logsource:
+  product: linux
+  service: auditd
+  category: process_creation
+detection:
+  selection:
+    ContainerImage|contains:
+      - 'alpine'
+      - 'debian'
+      - 'ubuntu'
+    Image|endswith:
+      - '/sh'
+      - '/bash'
+      - '/ash'
+  condition: selection
+falsepositives:
+  - Debugging containers
+level: high
+tags:
+  - attack.execution
+  - attack.defense_evasion
+  - platform.container
