@@ -1,0 +1,20 @@
+title: Pod Creation With HostPath Volume
+id: 19b0a22b-ec4b-4f3c-b29e-e41664dc1e5e
+description: Detects Kubernetes pod specs using `hostPath`, which maps host file systems into containers—a known risk for breakout and tampering.
+status: test
+logsource:
+  product: kubernetes
+  category: application
+detection:
+  selection:
+    verb: 'create'
+    requestObject.spec.volumes.hostPath.path|exists: true
+  condition: selection
+falsepositives:
+  - Backup DaemonSets
+  - Security tooling (Falco, Node Exporter)
+level: high
+tags:
+  - attack.persistence
+  - attack.t1609
+  - platform.kubernetes
