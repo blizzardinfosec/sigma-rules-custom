@@ -1,0 +1,19 @@
+title: TCC.db Modified on macOS
+id: a7b3dc59-25a1-4e31-89e1-4a1c1df04a74
+status: stable
+description: Detects unauthorized modification of the TCC.db database, which controls app access to sensitive services like the microphone, camera, or location.
+author: blizzardinfosec
+logsource:
+  product: macos
+  category: file_modification
+detection:
+  selection:
+    TargetFilename|contains: '/Library/Application Support/com.apple.TCC/TCC.db'
+    Image|contains: ['sqlite3', 'bash', 'zsh']
+  condition: selection
+level: high
+tags:
+  - attack.privilege_escalation
+  - attack.persistence
+falsepositives:
+  - System updates (rare)
