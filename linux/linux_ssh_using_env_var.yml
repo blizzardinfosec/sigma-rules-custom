@@ -1,0 +1,20 @@
+title: SSH With Suspicious ENV Usage
+id: 27c3f8a5-2842-41ed-b2b2-fb8f90c87bfa
+status: stable
+description: Detects use of SSH commands with abnormal or suspicious environment variable injection.
+author: blizzardinfosec
+logsource:
+  product: linux
+  category: process_creation
+detection:
+  selection:
+    CommandLine|contains|all:
+      - 'SSH_AUTH_SOCK='
+      - 'ssh'
+  condition: selection
+level: high
+tags:
+  - attack.defense_evasion
+  - attack.credential_access
+falsepositives:
+  - DevOps tools exporting SSH_AUTH_SOCK temporarily
