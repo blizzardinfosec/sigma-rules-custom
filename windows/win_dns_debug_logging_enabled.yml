@@ -1,0 +1,21 @@
+title: Windows DNS Debug Logging Enabled
+id: 1e80d5aa-98a6-4b4e-882d-3df328cc845a
+status: experimental
+description: Detects enabling of DNS debug logging, which can be used to collect sensitive DNS queries and exfiltrate data.
+author: blizzardinfosec
+logsource:
+  category: registry_set
+  product: windows
+  service: system
+detection:
+  selection:
+    TargetObject|endswith: '\Services\DNS\Parameters\DebugLogging'
+    Details: '0x1'
+  condition: selection
+level: medium
+tags:
+  - attack.persistence
+  - attack.collection
+  - attack.t1071
+falsepositives:
+  - Admin debugging DNS issues
