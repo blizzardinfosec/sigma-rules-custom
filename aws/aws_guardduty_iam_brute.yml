@@ -1,0 +1,19 @@
+title: AWS GuardDuty - IAM Brute Force Attack
+id: 3f2642f7-91f1-4087-819f-4f82c878d8b2
+status: stable
+description: Detects multiple failed login attempts for an IAM user in a short time window, as seen in GuardDuty logs.
+author: blizzardinfosec
+logsource:
+  service: aws.guardduty
+  product: aws
+detection:
+  selection:
+    detail.type: 'UnauthorizedAccess:IAMUser/PasswordBruteForce'
+  condition: selection
+level: high
+tags:
+  - attack.credential_access
+  - attack.t1110
+falsepositives:
+  - Forgotten password
+  - Legitimate brute-force detection tests
