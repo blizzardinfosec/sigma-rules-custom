@@ -1,0 +1,18 @@
+title: Okta - Login from New Country for User
+id: 4bd7ef3e-7f1f-4a17-851e-6c89b74a94a5
+description: Detects when a user logs in from a country they have not been seen in before.
+status: experimental
+logsource:
+  product: okta
+  category: authentication
+detection:
+  selection:
+    event.action: user.login.success
+    geo.country_name|in: ['Russia', 'China', 'Iran']
+  condition: selection
+level: high
+tags:
+  - attack.initial_access
+  - attack.t1078
+falsepositives:
+  - Traveling executives or VPN usage
