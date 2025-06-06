@@ -1,0 +1,16 @@
+title: Meraki Admin Login Detected
+id: 71e229f2-a031-4c86-867e-20f879ce7a1d
+description: Detects a successful or failed login to the Meraki dashboard.
+status: stable
+logsource:
+  product: meraki
+  category: authentication
+detection:
+  selection:
+    event.action: login
+    event.outcome|in: ['success', 'failure']
+  condition: selection
+level: medium
+tags:
+  - attack.initial_access
+  - attack.t1078
