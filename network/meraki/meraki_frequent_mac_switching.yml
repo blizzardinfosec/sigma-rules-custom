@@ -1,0 +1,17 @@
+title: Frequent MAC Address Switching on Meraki Port
+id: 59db5f02-cd43-4eb0-bcd4-5d4e28d12fa5
+description: Detects a large number of different MAC addresses connecting to the same Meraki switch port in a short time.
+status: experimental
+logsource:
+  product: meraki
+  category: network
+detection:
+  selection:
+    event.action: client.mac.seen
+    network.port: 48
+  timeframe: 5m
+  condition: selection | count() by source.port > 10
+level: high
+tags:
+  - attack.discovery
+  - attack.lateral_movement
