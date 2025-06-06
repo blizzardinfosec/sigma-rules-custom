@@ -1,0 +1,19 @@
+title: Meraki - Possible DHCP Flooding Attack
+id: 33fe027d-9f82-423a-a822-c0f7803c5891
+description: Detects a high volume of DHCP lease requests in a short period, potentially indicating a denial-of-service attack or rogue device behavior.
+status: experimental
+logsource:
+  product: meraki
+  category: dhcp
+detection:
+  selection:
+    event.action: dhcp.lease.request
+  timeframe: 5m
+  condition: selection | count() by source.ip > 30
+level: medium
+tags:
+  - attack.impact
+  - attack.discovery
+falsepositives:
+  - Guest Wi-Fi surges
+  - Office boot-up storm
