@@ -1,0 +1,17 @@
+title: Okta - User-Initiated MFA Reset
+id: 00bceedd-5f7f-4bb1-ae39-d989d9b95c87
+description: Detects when a user resets their MFA factor, which may indicate account takeover activity.
+status: stable
+logsource:
+  product: okta
+  category: iam
+detection:
+  selection:
+    event.action: user.mfa.factor.reset
+  condition: selection
+level: medium
+tags:
+  - attack.credential_access
+  - attack.defense_evasion
+falsepositives:
+  - User changing phones or re-enrolling factor
