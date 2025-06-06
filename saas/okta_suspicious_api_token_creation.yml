@@ -1,0 +1,19 @@
+title: Okta - Suspicious API Token Created
+id: 53a2062b-d0c0-4fae-9cb4-133c56d5ea5e
+description: Detects creation of an API token, which can enable privileged actions if abused.
+status: experimental
+logsource:
+  product: okta
+  category: iam
+detection:
+  selection:
+    event.action: api.token.created
+  filter:
+    user.name|in: ['automation-bot', 'terraform-ci', 'serviceaccount-okta']
+  condition: selection and not filter
+level: high
+tags:
+  - attack.persistence
+  - attack.defense_evasion
+falsepositives:
+  - Onboarding of new automation pipelines
