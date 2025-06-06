@@ -1,0 +1,18 @@
+title: Okta - SSO Assignment to External Domain
+id: a13b17c6-ea3c-4965-90db-202d0b9d8b4c
+description: Detects a user or group assignment to an SSO app with an external email domain, which may be a sign of external exposure or misconfiguration.
+status: experimental
+logsource:
+  product: okta
+  category: configuration
+detection:
+  selection:
+    event.action: app.assignment.created
+    target.email|endswith: ['@gmail.com', '@yahoo.com', '@protonmail.com']
+  condition: selection
+level: high
+tags:
+  - attack.initial_access
+  - attack.t1098
+falsepositives:
+  - Consultants or intentional test accounts
