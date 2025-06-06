@@ -1,0 +1,18 @@
+title: Meraki - WAN IP Address Change
+id: af41aa5f-3e48-48e2-8813-487eb0f4bfe3
+description: Detects a change in WAN IP address on a Meraki device, which may indicate upstream compromise, failover, or VPN tunneling.
+status: experimental
+logsource:
+  product: meraki
+  category: network
+detection:
+  selection:
+    event.action: wan.ip.changed
+  condition: selection
+level: medium
+tags:
+  - attack.command_and_control
+  - attack.t1090
+falsepositives:
+  - Planned failover
+  - ISP maintenance
