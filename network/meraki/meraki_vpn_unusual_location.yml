@@ -1,0 +1,16 @@
+title: Meraki VPN Login from Unusual Country
+id: 4162d42f-89f0-4ec1-a755-b32cd3e3a51f
+description: Flags a Meraki VPN login from a country not previously seen for the user.
+status: experimental
+logsource:
+  product: meraki
+  category: vpn
+detection:
+  selection:
+    event.action: vpn.login
+    geo.country_name|in: ['Russia', 'China', 'Iran']
+  condition: selection
+level: high
+tags:
+  - attack.initial_access
+  - attack.t1133
