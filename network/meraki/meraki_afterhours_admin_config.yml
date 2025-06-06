@@ -1,0 +1,20 @@
+title: Meraki - After-Hours Config Push
+id: 8d9aef90-74ae-40fd-b176-7cf3498e1379
+description: Detects a configuration change made by an admin outside normal working hours, which could indicate unauthorized access or lateral movement.
+status: experimental
+logsource:
+  product: meraki
+  category: configuration
+detection:
+  selection:
+    event.action: config.update
+    user.name|present: true
+    event.time|outside_business_hours: true
+  condition: selection
+level: high
+tags:
+  - attack.persistence
+  - attack.privilege_escalation
+falsepositives:
+  - On-call engineers
+  - Emergency patch windows
