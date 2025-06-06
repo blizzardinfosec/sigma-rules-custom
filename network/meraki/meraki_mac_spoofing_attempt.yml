@@ -1,0 +1,20 @@
+title: Meraki - Frequent MAC Spoofing Attempt
+id: b2ccf019-8a56-4f2b-9968-ef946c2e96d1
+description: Detects when a single IP or switch port sees a high number of different MAC addresses in a short time, which may indicate MAC spoofing or rogue device scanning.
+status: experimental
+logsource:
+  product: meraki
+  category: network
+detection:
+  selection:
+    event.action: mac.address.seen
+    source.ip|present: true
+  timeframe: 10m
+  condition: selection | count_distinct(device.mac) by source.ip > 10
+level: high
+tags:
+  - attack.defense_evasion
+  - attack.credential_access
+falsepositives:
+  - Wi-Fi guest networks
+  - Lab environments
