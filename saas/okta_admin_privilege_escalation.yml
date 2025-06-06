@@ -1,0 +1,19 @@
+title: Okta - Admin Privilege Escalation
+id: 49cc221e-32d0-4961-a417-1edb7cb9c9cb
+description: Detects when a user is granted admin privileges, which may be a sign of account compromise or insider activity.
+status: stable
+logsource:
+  product: okta
+  category: iam
+detection:
+  selection:
+    event.action: user.account.privilege.granted
+    target.role|contains: ['SUPER_ADMIN', 'ORG_ADMIN']
+  condition: selection
+level: high
+tags:
+  - attack.persistence
+  - attack.privilege_escalation
+  - attack.t1078
+falsepositives:
+  - Legitimate role assignments by HR/IT
