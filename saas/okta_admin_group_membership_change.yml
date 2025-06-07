@@ -1,0 +1,18 @@
+title: Okta - Admin Group Membership Change
+id: 56b5e5d4-d23c-4052-b0c6-884a4e77a80f
+description: Detects when a user is added to or removed from an administrative group in Okta.
+status: stable
+logsource:
+  product: okta
+  category: iam
+detection:
+  selection:
+    event.action|in: ['user.group.membership.add', 'user.group.membership.remove']
+    target.group|contains: ['admin', 'super_admin', 'security']
+  condition: selection
+level: high
+tags:
+  - attack.persistence
+  - attack.privilege_escalation
+falsepositives:
+  - Role changes during onboarding/offboarding
