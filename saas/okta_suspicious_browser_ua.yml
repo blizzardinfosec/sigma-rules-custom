@@ -1,0 +1,19 @@
+title: Okta - Login from Suspicious Browser User Agent
+id: 0c2f19c3-8bc4-4fa7-83f1-2a53eb1bc063
+description: Detects logins from suspicious or outdated browser agents often used by automated tools or infostealers.
+status: experimental
+logsource:
+  product: okta
+  category: authentication
+detection:
+  selection:
+    event.action: user.login.success
+    http.user_agent|contains: ['python-requests', 'curl/', 'Mozilla/4.0', 'scrapy']
+  condition: selection
+level: medium
+tags:
+  - attack.initial_access
+  - attack.defense_evasion
+falsepositives:
+  - Legacy systems
+  - Automation services without custom user-agent headers
