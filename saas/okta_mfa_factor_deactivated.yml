@@ -1,0 +1,18 @@
+title: Okta - MFA Factor Deactivated by User
+id: cbe38750-354b-4f76-b8a1-c15dd50fd3b7
+description: Detects when a user deactivates an MFA factor, which may indicate malicious activity if unexpected.
+status: stable
+logsource:
+  product: okta
+  category: iam
+detection:
+  selection:
+    event.action: user.mfa.factor.deactivated
+  condition: selection
+level: high
+tags:
+  - attack.credential_access
+  - attack.defense_evasion
+falsepositives:
+  - Replacing device
+  - Corporate re-enrollment flow
