@@ -1,0 +1,20 @@
+title: Okta - Mass User Unassignment from Application
+id: c1602df7-8b19-4e6b-9586-e1f9c7263081
+description: Detects a large number of users being removed from a specific Okta application, potentially indicating sabotage or misconfiguration.
+status: experimental
+logsource:
+  product: okta
+  category: application
+detection:
+  selection:
+    event.action: app.assignment.deleted
+    target.app|present: true
+  timeframe: 5m
+  condition: selection | count_distinct(user.name) by target.app > 20
+level: medium
+tags:
+  - attack.impact
+  - attack.t1489
+falsepositives:
+  - Offboarding a large team
+  - Planned group migration
