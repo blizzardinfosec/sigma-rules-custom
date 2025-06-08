@@ -1,0 +1,19 @@
+title: Okta - Critical Org Setting Modified
+id: 12f690bd-67f1-4e61-8394-15cf76d3aa03
+description: Detects changes to sensitive organization-wide Okta settings, such as password policies, branding, or security configuration.
+status: stable
+logsource:
+  product: okta
+  category: configuration
+detection:
+  selection:
+    event.action: org.settings.update
+    target.setting|contains: ['password', 'branding', 'mfa', 'session', 'security']
+  condition: selection
+level: high
+tags:
+  - attack.defense_evasion
+  - attack.persistence
+falsepositives:
+  - Planned policy rollouts
+  - Okta admin configuration tasks
