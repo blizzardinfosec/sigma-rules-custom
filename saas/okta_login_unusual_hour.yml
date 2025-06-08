@@ -1,0 +1,19 @@
+title: Okta - Login Outside Business Hours
+id: dfa06e02-5a97-4870-bf65-c967bd3d0d44
+description: Detects logins occurring outside standard business hours, which may indicate compromised account access or lateral movement.
+status: experimental
+logsource:
+  product: okta
+  category: authentication
+detection:
+  selection:
+    event.action: user.login.success
+    event.time|outside_business_hours: true
+  condition: selection
+level: medium
+tags:
+  - attack.initial_access
+  - attack.defense_evasion
+falsepositives:
+  - International employees
+  - On-call access
