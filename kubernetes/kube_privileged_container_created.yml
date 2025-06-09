@@ -1,0 +1,19 @@
+title: K8s - Privileged Container Deployed
+id: 18ac2c94-2e08-4d10-875b-bf3d2fd08ae0
+description: Detects deployment of a container with `privileged: true`, which may allow container breakout or host-level access.
+status: stable
+logsource:
+  product: kubernetes
+  category: audit
+detection:
+  selection:
+    verb: create
+    requestObject.spec.containers[*].securityContext.privileged: true
+  condition: selection
+level: high
+tags:
+  - attack.execution
+  - attack.t1611
+  - attack.persistence
+falsepositives:
+  - Security tools requiring host access (e.g. Falco, Sysdig)
