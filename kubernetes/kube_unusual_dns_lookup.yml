@@ -1,0 +1,18 @@
+title: K8s - Suspicious DNS Lookups from Pod
+id: 964e34fa-9b0c-49b8-a6c8-4c948f03bfc7
+description: Detects pods making DNS lookups to suspicious or non-resolvable domains—potentially indicating malware staging, beaconing, or misconfigurations.
+status: experimental
+logsource:
+  product: kubernetes
+  category: network
+detection:
+  selection:
+    dns.question.name|endswith: ['.xyz', '.top', '.tk', '.gq', '.onion']
+  condition: selection
+level: high
+tags:
+  - attack.command_and_control
+  - attack.t1071.004
+falsepositives:
+  - Misconfigured CI tools
+  - Legit domains using uncommon TLDs
