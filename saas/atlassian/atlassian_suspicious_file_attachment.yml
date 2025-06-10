@@ -1,0 +1,19 @@
+title: Atlassian - Suspicious File Attached in Jira
+id: 9f91d43c-76a1-4e17-9db8-8dc172a6974f
+description: Detects potentially sensitive or dangerous file types uploaded to Jira issues.
+status: experimental
+logsource:
+  product: atlassian
+  service: jira
+  category: application
+detection:
+  selection:
+    event.action: file.attachment.added
+    file.name|endswith: ['.exe', '.ps1', '.pem', '.pfx', '.key', '.bat']
+  condition: selection
+level: medium
+tags:
+  - attack.defense_evasion
+  - attack.initial_access
+falsepositives:
+  - Developers sharing debug tools or certs
