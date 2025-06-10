@@ -1,0 +1,19 @@
+title: Atlassian - New OAuth Token Created
+id: c6a81b74-66ec-41b3-83d2-d71b926c9a82
+description: Detects the creation of a new Atlassian API token or OAuth token, which may be used for automation—or abuse.
+status: experimental
+logsource:
+  product: atlassian
+  category: authentication
+detection:
+  selection:
+    event.action: api.token.created
+    user.name|present: true
+  condition: selection
+level: medium
+tags:
+  - attack.persistence
+  - attack.initial_access
+falsepositives:
+  - New integrations
+  - Developer tooling
