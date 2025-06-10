@@ -1,0 +1,20 @@
+title: Atlassian - Possible Confluence Page Scraping
+id: e90ceec9-3d93-4329-bfc5-9bb0be431e9a
+description: Detects a single user or IP accessing many Confluence pages in rapid succession, possibly exfiltrating documentation.
+status: experimental
+logsource:
+  product: atlassian
+  service: confluence
+  category: access
+detection:
+  selection:
+    event.action: confluence.page.viewed
+  timeframe: 5m
+  condition: selection | count() by source.ip > 30
+level: high
+tags:
+  - attack.exfiltration
+  - attack.collection
+falsepositives:
+  - Knowledge base crawlers
+  - Analysts reading documentation
