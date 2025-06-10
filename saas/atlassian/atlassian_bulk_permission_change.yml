@@ -1,0 +1,20 @@
+title: Atlassian - Mass Permission Change to Jira Projects
+id: 03e9a24e-5243-4953-8ad6-3b095deae121
+description: Detects a large number of project permission modifications in a short time window, which may indicate misconfiguration or malicious intent.
+status: experimental
+logsource:
+  product: atlassian
+  service: jira
+  category: iam
+detection:
+  selection:
+    event.action: project.permission.updated
+  timeframe: 5m
+  condition: selection | count() by user.name > 10
+level: high
+tags:
+  - attack.persistence
+  - attack.privilege_escalation
+falsepositives:
+  - Jira migration scripts
+  - Admin group onboarding
