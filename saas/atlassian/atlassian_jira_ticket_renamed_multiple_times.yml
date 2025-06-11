@@ -1,0 +1,19 @@
+title: Atlassian - Jira Ticket Renamed Multiple Times
+id: 3cdd9c23-dcab-4864-879e-cc2962ed8d0a
+description: Detects potential obfuscation or smuggling by repeatedly changing a Jira issue title, possibly to hide links, secrets, or suspicious content.
+status: experimental
+logsource:
+  product: atlassian
+  service: jira
+  category: application
+detection:
+  selection:
+    event.action: issue.summary.updated
+  timeframe: 10m
+  condition: selection | count() by object.id > 5
+level: medium
+tags:
+  - attack.defense_evasion
+  - attack.t1564.001
+falsepositives:
+  - Active grooming of incident tickets
