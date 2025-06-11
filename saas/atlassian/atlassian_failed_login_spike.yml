@@ -1,0 +1,19 @@
+title: Atlassian - Spike in Failed Login Attempts
+id: e3be4262-c39e-4a3a-a34d-5e5e882c7c74
+description: Detects a large number of failed login attempts to Atlassian accounts within a short time, possibly indicating brute force or credential stuffing.
+status: stable
+logsource:
+  product: atlassian
+  category: authentication
+detection:
+  selection:
+    event.action: user.login.failed
+  timeframe: 5m
+  condition: selection | count() by user.email > 10
+level: high
+tags:
+  - attack.credential_access
+  - attack.t1110
+falsepositives:
+  - Password sync issues
+  - SSO misconfigurations
