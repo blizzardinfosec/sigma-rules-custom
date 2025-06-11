@@ -1,0 +1,18 @@
+title: Atlassian - New Marketplace Plugin Installed
+id: 527fa1bc-86f6-4d0b-a589-7776c9d79267
+description: Detects installation of a new Atlassian plugin from Marketplace or third-party source, which may introduce risk.
+status: stable
+logsource:
+  product: atlassian
+  category: configuration
+detection:
+  selection:
+    event.action: plugin.installed
+    target.plugin.name|present: true
+  condition: selection
+level: high
+tags:
+  - attack.persistence
+  - attack.t1505.003
+falsepositives:
+  - Admin installing integrations
