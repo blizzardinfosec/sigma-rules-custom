@@ -1,0 +1,20 @@
+title: Atlassian - Force Push to Protected Branch
+id: f0f0c107-6434-4ff6-b021-f828c12ee81d
+description: Detects when a force push is made to a protected branch in Bitbucket, possibly overwriting commit history or hiding malicious code.
+status: high
+logsource:
+  product: atlassian
+  service: bitbucket
+  category: application
+detection:
+  selection:
+    event.action: repository.push.force
+    target.branch|contains: ['main', 'master', 'prod']
+  condition: selection
+level: high
+tags:
+  - attack.defense_evasion
+  - attack.persistence
+falsepositives:
+  - Emergency reverts
+  - CI/CD cleanup scripts
