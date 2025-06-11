@@ -1,0 +1,19 @@
+title: Atlassian - Confluence Space Export Requested
+id: 6b6c3d53-1871-40ac-8a47-7b45f55606c6
+description: Detects when a user requests a full export of an entire Confluence space, which may signal data exfiltration or internal reconnaissance.
+status: experimental
+logsource:
+  product: atlassian
+  service: confluence
+  category: application
+detection:
+  selection:
+    event.action: confluence.space.export
+  condition: selection
+level: high
+tags:
+  - attack.exfiltration
+  - attack.collection
+falsepositives:
+  - Legal/compliance audits
+  - Internal wiki backups
