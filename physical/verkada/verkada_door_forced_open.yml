@@ -1,0 +1,19 @@
+title: Verkada - Door Forced Open Event
+id: 95f8b625-e336-49a0-8d39-9d2e5ed8b5f6
+description: Detects when a door is physically opened without proper badge scan or access grant event.
+status: stable
+logsource:
+  product: verkada
+  category: access_control
+detection:
+  selection:
+    event.type: door-forced-open
+    badge.access: null
+  condition: selection
+level: high
+tags:
+  - physical_intrusion
+  - security_event
+falsepositives:
+  - Maintenance bypass
+  - Emergency exits
