@@ -1,0 +1,20 @@
+title: Verkada - New Admin Created by Admin
+id: 01d2644e-3c32-4e8d-9cd3-fb05dc2583b7
+description: Detects when an administrator account is used to create or elevate another user to admin status.
+status: experimental
+logsource:
+  product: verkada
+  category: iam
+detection:
+  selection:
+    event.type: user.role.updated
+    target.role: admin
+    actor.role: admin
+  condition: selection
+level: high
+tags:
+  - attack.persistence
+  - insider_threat
+falsepositives:
+  - Admin onboarding
+  - Legitimate team expansion
