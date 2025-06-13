@@ -1,0 +1,19 @@
+title: Verkada - Repeated Failed Badge Access
+id: 29f0ccf7-2cd7-4c8f-a3c5-07a1b020765f
+description: Detects multiple consecutive failed badge attempts by a single badge ID or person.
+status: stable
+logsource:
+  product: verkada
+  category: access_control
+detection:
+  selection:
+    event.type: badge.access.denied
+  timeframe: 5m
+  condition: selection | count() by user.badge_id > 5
+level: medium
+tags:
+  - physical_intrusion
+  - brute_force
+falsepositives:
+  - Forgotten badge
+  - Access attempt at wrong door
