@@ -1,0 +1,19 @@
+title: Verkada - Camera Disconnected Unexpectedly
+id: 7e4a4d6a-19a5-40ec-90ce-d961ee888d3d
+description: Detects when a Verkada surveillance camera suddenly disconnects or is unreachable, which may indicate tampering or power loss.
+status: stable
+logsource:
+  product: verkada
+  category: surveillance
+detection:
+  selection:
+    event.type: camera.offline
+    event.reason|not_contains: ['scheduled', 'maintenance']
+  condition: selection
+level: high
+tags:
+  - physical_intrusion
+  - availability
+falsepositives:
+  - Network outages
+  - Known reboots/updates
