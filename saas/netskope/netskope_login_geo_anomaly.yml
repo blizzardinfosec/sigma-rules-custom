@@ -1,0 +1,19 @@
+title: Netskope - Login from Unusual Geography
+id: 55c0a37e-d26a-4d1b-bacd-c4be3fcac8ff
+description: Detects a login from a country or region not previously associated with the user, indicating potential credential compromise.
+status: experimental
+logsource:
+  product: netskope
+  category: authentication
+detection:
+  selection:
+    event.action: login.success
+    geo.country|not_in: known_user_geo_locations
+  condition: selection
+level: high
+tags:
+  - attack.initial_access
+  - attack.t1078
+falsepositives:
+  - VPN users
+  - Traveling staff
