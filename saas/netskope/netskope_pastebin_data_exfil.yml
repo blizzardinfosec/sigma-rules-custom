@@ -1,0 +1,18 @@
+title: Netskope - Pastebin Used for Potential Data Exfiltration
+id: 33ea6b82-3ac8-4a5e-8a0e-03cda2ae2c5c
+description: Detects when a user interacts with Pastebin, potentially used to exfiltrate code, credentials, or sensitive data.
+status: experimental
+logsource:
+  product: netskope
+  category: web
+detection:
+  selection:
+    dst.domain: 'pastebin.com'
+    event.action|in: ['post', 'upload']
+  condition: selection
+level: high
+tags:
+  - attack.exfiltration
+  - attack.t1567.002
+falsepositives:
+  - Developers pasting code samples
