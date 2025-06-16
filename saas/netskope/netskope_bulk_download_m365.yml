@@ -1,0 +1,20 @@
+title: Netskope - Bulk File Download from Microsoft 365
+id: 7dc70e91-5b4a-4a8c-bb64-58e27b38306d
+description: Detects mass file downloads from Microsoft 365 apps like OneDrive or SharePoint, signaling potential insider exfiltration.
+status: stable
+logsource:
+  product: netskope
+  category: data_access
+detection:
+  selection:
+    app.name|in: ['OneDrive', 'SharePoint']
+    event.action: download
+    event.file_count|gte: 100
+  condition: selection
+level: high
+tags:
+  - attack.exfiltration
+  - insider_threat
+falsepositives:
+  - Data migrations
+  - Backup operations
