@@ -1,0 +1,19 @@
+title: Netskope - Upload to Personal Google Drive
+id: 99ad8502-65e7-442a-ae6d-f7dbf4459830
+description: Detects data uploads to Google Drive accounts outside the corporate domain, a common DLP and exfiltration vector.
+status: stable
+logsource:
+  product: netskope
+  category: data_loss_prevention
+detection:
+  selection:
+    dst.domain|contains: 'drive.google.com'
+    user.email|not_contains: 'yourcorp.com'
+    event.action: upload
+  condition: selection
+level: high
+tags:
+  - attack.exfiltration
+  - attack.t1048
+falsepositives:
+  - Consultants with personal cloud drive needs
