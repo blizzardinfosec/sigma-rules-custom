@@ -1,0 +1,18 @@
+title: Netskope - User Accessed Unapproved SaaS App
+id: f5bc8232-b51c-4a08-9516-c2d03e4d2de2
+description: Detects users accessing apps not on the allowlist, which may represent shadow IT or risky services.
+status: experimental
+logsource:
+  product: netskope
+  category: app_usage
+detection:
+  selection:
+    app.category: 'Unapproved'
+    event.action: access
+  condition: selection
+level: medium
+tags:
+  - attack.reconnaissance
+  - shadow_it
+falsepositives:
+  - Testing/validation tools by devs
