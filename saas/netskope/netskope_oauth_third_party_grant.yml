@@ -1,0 +1,19 @@
+title: Netskope - Risky OAuth Grant to Third-Party App
+id: 3dba3d49-bc96-4722-bae1-57c32a97e2fa
+description: Detects when a user grants OAuth access to a third-party application with elevated scopes (e.g., Gmail, Drive, Teams).
+status: stable
+logsource:
+  product: netskope
+  category: oauth
+detection:
+  selection:
+    event.action: oauth.grant
+    oauth.scope|contains: ['mail.read', 'files.read', 'directory.read']
+    app.risk_level: 'high'
+  condition: selection
+level: high
+tags:
+  - attack.persistence
+  - attack.credential_access
+falsepositives:
+  - Legitimate OAuth integrations
