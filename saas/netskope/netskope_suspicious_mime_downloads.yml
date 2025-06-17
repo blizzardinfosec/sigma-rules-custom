@@ -1,0 +1,23 @@
+title: Netskope - Executable or Script Download via Browser
+id: 78932a3f-e243-4642-a64b-50f7c1732b62
+description: Detects download of executable, batch, or script files from the internet, which can lead to malware infection.
+status: stable
+logsource:
+  product: netskope
+  category: web
+detection:
+  selection:
+    event.action: download
+    file.mime_type|in:
+      - 'application/x-msdownload'
+      - 'application/x-sh'
+      - 'application/x-bash'
+      - 'application/x-dosexec'
+      - 'application/x-executable'
+  condition: selection
+level: medium
+tags:
+  - attack.execution
+  - malware_delivery
+falsepositives:
+  - Developers downloading tools
