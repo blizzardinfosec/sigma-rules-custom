@@ -1,0 +1,18 @@
+title: Netskope - Phishing Domain Accessed by User
+id: cfe3e90d-d481-4f95-bc5e-3c23d9e46d77
+description: Detects when a user accesses a known phishing or suspicious domain via HTTP/HTTPS.
+status: experimental
+logsource:
+  product: netskope
+  category: web
+detection:
+  selection:
+    event.action: access
+    dst.domain_reputation: 'phishing'
+  condition: selection
+level: high
+tags:
+  - attack.initial_access
+  - phishing
+falsepositives:
+  - False positives from newly registered domains
