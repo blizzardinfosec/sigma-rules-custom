@@ -1,0 +1,19 @@
+title: Netskope - Sensitive File Shared with Public
+id: b1b67a64-18b7-4a3f-b546-015c4285b6b1
+description: Detects when a file classified as sensitive (PII, source code, etc.) is shared publicly via a cloud app.
+status: stable
+logsource:
+  product: netskope
+  category: data_loss_prevention
+detection:
+  selection:
+    event.action: file.share
+    file.access: public
+    file.classification: ['PII', 'Confidential', 'Source Code']
+  condition: selection
+level: high
+tags:
+  - attack.exfiltration
+  - dlp
+falsepositives:
+  - Deliberate public open-sourcing
