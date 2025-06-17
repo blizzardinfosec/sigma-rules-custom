@@ -1,0 +1,19 @@
+title: Netskope - Concurrent Sessions from Different Geo Regions
+id: e5a83a7f-cc96-464d-b351-1c7ecf91c671
+description: Detects a user with two active sessions from vastly different geographic locations within a short time window, indicating possible credential compromise.
+status: experimental
+logsource:
+  product: netskope
+  category: authentication
+detection:
+  selection:
+    event.action: login.success
+    geo.conflict: true
+  condition: selection
+level: high
+tags:
+  - attack.credential_access
+  - account_takeover
+falsepositives:
+  - VPN usage
+  - Overlapping mobile/laptop use
