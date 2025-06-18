@@ -1,0 +1,18 @@
+title: HID - Door Held Open
+id: 2c187e01-5b6b-464a-8f4f-28f1e567dc8b
+description: Detects when a door is held open beyond its expected time limit, which can indicate tailgating or door propping.
+status: stable
+logsource:
+  product: hid
+  category: door
+detection:
+  selection:
+    event.action: door.alarm.triggered
+    door.alarm_type: door_held_open
+  condition: selection
+level: medium
+tags:
+  - physical_intrusion
+  - social_engineering
+falsepositives:
+  - Maintenance or equipment moves
