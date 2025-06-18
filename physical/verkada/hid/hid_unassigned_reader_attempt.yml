@@ -1,0 +1,18 @@
+title: HID - Badge Used at Unauthorized Reader
+id: 5097ce4e-f9ed-43bb-bf85-b934fe7d3859
+description: Detects when a badge is used at a reader where the user does not have assigned access — may indicate exploration or credential abuse.
+status: experimental
+logsource:
+  product: hid
+  category: access_control
+detection:
+  selection:
+    event.action: badge.access.denied
+    access.reason: unassigned_reader
+  condition: selection
+level: high
+tags:
+  - physical_intrusion
+  - attack.reconnaissance
+falsepositives:
+  - Badge access provisioning in progress
