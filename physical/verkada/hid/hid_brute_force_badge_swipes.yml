@@ -1,0 +1,19 @@
+title: HID - Repeated Denied Badge Swipes
+id: 63d9b991-65ff-4f58-8617-45b2f98c83cb
+description: Detects multiple failed badge access attempts by the same user at the same reader within a short time, indicating possible brute force or unauthorized access attempts.
+status: stable
+logsource:
+  product: hid
+  category: access_control
+detection:
+  selection:
+    event.action: badge.access.denied
+  timeframe: 5m
+  condition: selection | count() by user.badge_id > 5
+level: medium
+tags:
+  - physical_intrusion
+  - attack.brute_force
+falsepositives:
+  - User forgot correct reader location
+  - Badge failure due to low battery
