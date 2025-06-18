@@ -1,0 +1,18 @@
+title: HID - Deprovisioned Badge Attempted Access
+id: 98950a09-f7b2-49e6-98a2-b51e3ab9fa95
+description: Detects when a badge that has been deactivated still attempts access, signaling a failure in revocation or reuse attempt.
+status: stable
+logsource:
+  product: hid
+  category: access_control
+detection:
+  selection:
+    event.action: badge.access.denied
+    badge.status: deactivated
+  condition: selection
+level: high
+tags:
+  - attack.persistence
+  - insider_threat
+falsepositives:
+  - Badge was reissued but sync delay occurred
