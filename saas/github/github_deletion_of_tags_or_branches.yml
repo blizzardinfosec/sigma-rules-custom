@@ -1,0 +1,21 @@
+title: GitHub - Destructive Git Action (Tag or Branch Deletion)
+id: 1dce5f12-cf1d-4465-9ae0-e9571a123ffa
+description: Detects deletion of Git tags or branches, which may indicate sabotage or cleanup activity by a malicious actor.
+status: experimental
+logsource:
+  category: saas
+  product: github
+detection:
+  selection:
+    action:
+      - git.branch.delete
+      - git.tag.delete
+  condition: selection
+level: medium
+tags:
+  - github
+  - attack.defense_evasion
+  - attack.impact
+falsepositives:
+  - Repo maintenance
+  - Stale branch cleanup
