@@ -1,0 +1,21 @@
+title: GitHub - Personal Access Token Created from Unusual Location
+id: 7a5c90e6-4d0d-4a0f-8573-89fe9a743e83
+description: Detects the creation of a GitHub PAT from a new geo or ASN, which may indicate account compromise.
+status: experimental
+logsource:
+  category: saas
+  product: github
+detection:
+  selection:
+    action: oauth_token.create
+  filter:
+    source.geo.country|not_in: known_user_geo_locations
+  condition: selection and filter
+level: high
+tags:
+  - attack.initial_access
+  - github
+  - saas
+falsepositives:
+  - Developer travel
+  - Remote contractors
