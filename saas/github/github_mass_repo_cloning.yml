@@ -1,0 +1,20 @@
+title: GitHub - Unusual Volume of Repository Cloning
+id: 4e3c21b8-ff29-4a49-a7ee-36406a038b64
+description: Detects a spike in repository cloning by a single user, which may indicate data exfiltration or insider threat.
+status: experimental
+logsource:
+  category: saas
+  product: github
+detection:
+  selection:
+    action: git.clone
+  timeframe: 10m
+  condition: selection | count() by actor.login > 15
+level: high
+tags:
+  - attack.exfiltration
+  - insider_threat
+  - github
+falsepositives:
+  - CI/CD automation
+  - Migration tooling
