@@ -1,0 +1,20 @@
+title: GitHub - Team Permission Escalated to Admin
+id: 16dcb1c6-12b5-43be-b469-f7165b0e1771
+description: Detects when a GitHub team is escalated to admin-level access on a repo.
+status: stable
+logsource:
+  category: saas
+  product: github
+detection:
+  selection:
+    action: team.add_repository
+    permission: admin
+  condition: selection
+level: medium
+tags:
+  - attack.persistence
+  - github
+  - privilege_escalation
+falsepositives:
+  - Admin onboarding
+  - Legitimate access change
