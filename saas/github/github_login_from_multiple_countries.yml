@@ -1,0 +1,20 @@
+title: GitHub - Logins from Multiple Countries in Short Timeframe
+id: 2486e179-bc6f-4cb8-8882-85f2bb84d318
+description: Detects when the same GitHub user logs in from more than one country in under an hour, a possible sign of account takeover.
+status: experimental
+logsource:
+  category: saas
+  product: github
+detection:
+  selection:
+    action: web.login
+  timeframe: 1h
+  condition: selection | group_by actor.login | count_distinct source.geo.country > 1
+level: high
+tags:
+  - attack.initial_access
+  - github
+  - geovelocity
+falsepositives:
+  - VPN usage
+  - Devs on shared accounts
