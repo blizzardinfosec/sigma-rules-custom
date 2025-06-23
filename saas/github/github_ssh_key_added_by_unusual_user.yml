@@ -1,0 +1,21 @@
+title: GitHub - SSH Key Added by Unfamiliar User
+id: e93b43ac-01e3-4f25-8922-b91e0cc1931d
+description: Detects a new SSH key being added to a GitHub account outside of normal onboarding workflows.
+status: stable
+logsource:
+  category: saas
+  product: github
+detection:
+  selection:
+    action: public_key.create
+  filter:
+    actor.login|not_in: known_admins
+  condition: selection and filter
+level: medium
+tags:
+  - github
+  - attack.persistence
+  - credential_injection
+falsepositives:
+  - Key rotation
+  - Mistaken self-service
