@@ -1,0 +1,20 @@
+title: GitHub - Repository Transferred to External Org
+id: f5ae5f1f-17e2-47c0-8403-20de8b20297d
+description: Detects when a GitHub repository is transferred outside the organization, possibly as part of data exfiltration or misuse.
+status: high
+logsource:
+  category: saas
+  product: github
+detection:
+  selection:
+    action: repo.transfer
+    target_organization|not_in: known_orgs
+  condition: selection
+level: critical
+tags:
+  - github
+  - attack.exfiltration
+  - data_loss
+falsepositives:
+  - M&A / integration
+  - Shared vendor development
