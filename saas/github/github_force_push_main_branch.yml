@@ -1,0 +1,21 @@
+title: GitHub - Force Push to Main Branch
+id: 7c407731-50e9-4f9b-9670-c82dcf4f99bc
+description: Detects a force push (`--force`) to the default branch (e.g., main), often used to wipe history or alter critical commit history.
+status: stable
+logsource:
+  category: saas
+  product: github
+detection:
+  selection:
+    action: git.push
+    force: true
+    ref: refs/heads/main
+  condition: selection
+level: high
+tags:
+  - github
+  - attack.defense_evasion
+  - impact
+falsepositives:
+  - Git hygiene (rare)
+  - Cleanup after rebase
