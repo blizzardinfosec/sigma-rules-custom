@@ -1,0 +1,20 @@
+title: GitHub - Workflow Token Reused by Unusual Actor
+id: d382d4a2-ff87-42f5-a0e7-0c733bf303b4
+description: Detects GitHub workflow tokens being reused from IPs or users not linked to the original workflow trigger.
+status: experimental
+logsource:
+  category: saas
+  product: github
+detection:
+  selection:
+    action: workflow_job.run
+  filter:
+    source.ip|not_in: known_runner_ips
+  condition: selection and filter
+level: high
+tags:
+  - attack.persistence
+  - github
+  - automation_abuse
+falsepositives:
+  - Self-hosted runners from new IPs
