@@ -1,0 +1,21 @@
+title: M365 - OAuth Consent to Risky Third-Party App
+id: 3d7de0bc-0ad6-44a3-a300-0a00cf4a4c1e
+description: Detects users consenting to third-party OAuth apps with risky permissions like `Mail.ReadWrite` or `Directory.Read.All`.
+status: experimental
+logsource:
+  product: m365
+  service: azuread
+  category: audit
+detection:
+  selection:
+    Operation: ConsentToApp
+    Parameters.ConsentType: AllPrincipals
+    Parameters.ResourceAppId|not_in: trusted_enterprise_apps
+  condition: selection
+level: high
+tags:
+  - attack.persistence
+  - attack.credential_access
+  - m365
+falsepositives:
+  - Vendor integrations (if known)
