@@ -1,0 +1,21 @@
+title: M365 - Mailbox Delegation Granted
+id: 0c47ea46-b2cd-4371-9740-57e2718d3b58
+description: Detects when a user is granted full mailbox access to another user, which can be abused for silent monitoring or persistence.
+status: stable
+logsource:
+  product: m365
+  service: exchange
+  category: audit
+detection:
+  selection:
+    Operation: Add-MailboxPermission
+    Parameters.AccessRights: FullAccess
+  condition: selection
+level: medium
+tags:
+  - attack.persistence
+  - attack.privilege_escalation
+  - m365
+falsepositives:
+  - Executive support delegation
+  - Shared inbox use
