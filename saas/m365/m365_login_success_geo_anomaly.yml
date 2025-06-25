@@ -1,0 +1,20 @@
+title: M365 - Login from Unusual Country
+id: 9486241a-1797-4c4b-94c0-294e6ea96182
+description: Detects a successful login to M365 from a country not previously associated with the user.
+status: experimental
+logsource:
+  product: m365
+  category: authentication
+detection:
+  selection:
+    Operation: UserLoggedIn
+    ClientIP|geo.country|not_in: known_user_country_list
+  condition: selection
+level: medium
+tags:
+  - attack.initial_access
+  - geovelocity
+  - m365
+falsepositives:
+  - Travel
+  - Mobile VPN usage
