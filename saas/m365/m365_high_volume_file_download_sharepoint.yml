@@ -1,0 +1,21 @@
+title: M365 - High Volume Download from SharePoint
+id: 13f80321-2e3d-42fc-a509-b7a1d18fd339
+description: Detects large numbers of file downloads from a SharePoint site by a single user in a short window — possible exfiltration.
+status: experimental
+logsource:
+  product: m365
+  service: sharepoint
+  category: file_access
+detection:
+  selection:
+    Operation: FileDownloaded
+  timeframe: 30m
+  condition: selection | count() by UserId > 30
+level: high
+tags:
+  - attack.exfiltration
+  - m365
+  - insider_threat
+falsepositives:
+  - Migration tools
+  - Power users
