@@ -1,0 +1,21 @@
+title: M365 - Suspicious Mailbox Forwarding Rule Created
+id: eeb53a65-0df7-4f44-bd60-908d9fcbb741
+description: Detects the creation of inbox rules that forward emails to external domains, often used in BEC attacks.
+status: stable
+logsource:
+  product: m365
+  service: exchange
+  category: audit
+detection:
+  selection:
+    Operation: New-InboxRule
+    Parameters.ForwardTo|contains: ['@gmail.com', '@outlook.com', '@protonmail.com']
+  condition: selection
+level: high
+tags:
+  - attack.exfiltration
+  - attack.persistence
+  - m365
+falsepositives:
+  - Executive assistant delegation
+  - Legitimate forwarding to personal account
