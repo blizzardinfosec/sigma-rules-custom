@@ -1,0 +1,20 @@
+title: M365 - Inbox Rule Redirecting Emails to Junk
+id: 75fc0b24-0ef7-4b9d-9b76-128e9ed7db2f
+description: Detects inbox rules that move incoming messages to the Junk or Deleted Items folder — often used to hide phishing replies or account activity.
+status: stable
+logsource:
+  product: m365
+  service: exchange
+  category: audit
+detection:
+  selection:
+    Operation: New-InboxRule
+    Parameters.MoveToFolder|contains: ['Junk Email', 'Deleted Items']
+  condition: selection
+level: high
+tags:
+  - attack.persistence
+  - bec
+  - m365
+falsepositives:
+  - End-user spam filtering behavior
