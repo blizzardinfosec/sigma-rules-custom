@@ -1,0 +1,21 @@
+title: M365 - Global Administrator Role Assigned
+id: b227ef7e-97e1-42d6-bbb6-6a3b3d3a7ee0
+description: Detects when a user is added to the Global Admin role — a high-impact change that may indicate privilege escalation or misconfiguration.
+status: stable
+logsource:
+  product: m365
+  service: azuread
+  category: audit
+detection:
+  selection:
+    Operation: AddMemberToRole
+    Parameters.RoleName: Company Administrator
+  condition: selection
+level: critical
+tags:
+  - attack.privilege_escalation
+  - attack.persistence
+  - m365
+falsepositives:
+  - Admin onboarding
+  - Emergency access configuration
