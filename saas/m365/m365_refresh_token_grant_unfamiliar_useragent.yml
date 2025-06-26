@@ -1,0 +1,21 @@
+title: M365 - Refresh Token Grant from Unusual User Agent
+id: e6a2335e-ea01-421e-bdb2-b59ad70fbe25
+description: Detects refresh token activity from an unusual or legacy user agent, potentially indicating token theft or abuse.
+status: experimental
+logsource:
+  product: m365
+  category: authentication
+detection:
+  selection:
+    Operation: RefreshTokenIssued
+    UserAgent|re: 'Python|curl|PowerShell|Java|OkHttp'
+  condition: selection
+level: high
+tags:
+  - attack.persistence
+  - attack.credential_access
+  - oauth
+  - m365
+falsepositives:
+  - API integrations
+  - Testing by IT staff
