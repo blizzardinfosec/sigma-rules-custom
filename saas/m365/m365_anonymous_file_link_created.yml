@@ -1,0 +1,20 @@
+title: M365 - Anonymous File Link Created
+id: 3a8f0df0-76e1-423e-a9a4-0b0f29c7f1f6
+description: Detects when a user creates a SharePoint or OneDrive link that allows anonymous access — a common precursor to data exfiltration.
+status: experimental
+logsource:
+  product: m365
+  service: sharepoint
+  category: file_share
+detection:
+  selection:
+    Operation: AnonymousLinkCreated
+  condition: selection
+level: medium
+tags:
+  - attack.exfiltration
+  - data_leakage
+  - m365
+falsepositives:
+  - Marketing teams sharing assets
+  - Temporary external vendor access
