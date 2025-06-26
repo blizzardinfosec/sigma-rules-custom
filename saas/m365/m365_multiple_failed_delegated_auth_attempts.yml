@@ -1,0 +1,20 @@
+title: M365 - Multiple Failed Delegated Authentication Attempts
+id: a4f438b9-bd5f-402f-8d1c-7d4b1120af45
+description: Detects repeated failed login attempts using OAuth delegated access — potentially indicative of abuse, phishing, or brute force on third-party tokens.
+status: experimental
+logsource:
+  product: m365
+  category: authentication
+detection:
+  selection:
+    Operation: DelegatedSignInFailure
+  timeframe: 15m
+  condition: selection | count() by user.email > 5
+level: medium
+tags:
+  - attack.credential_access
+  - attack.initial_access
+  - m365
+falsepositives:
+  - App misconfiguration
+  - Expired session tokens
