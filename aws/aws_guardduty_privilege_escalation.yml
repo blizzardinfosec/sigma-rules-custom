@@ -1,0 +1,21 @@
+title: AWS GuardDuty – Privilege Escalation Alert
+id: 1fc95a87-7715-43b6-b4dc-f9d06e08ff95
+status: stable
+description: Detects GuardDuty finding indicating IAM privilege escalation attempt
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  product: aws
+  service: guardduty
+  category: alert
+detection:
+  selection:
+    detail.type:
+      - "PrivilegeEscalation"
+      - "PolicyModification"
+  condition: selection
+level: high
+tags:
+  - attack.persistence
+  - aws
+  - guardduty
