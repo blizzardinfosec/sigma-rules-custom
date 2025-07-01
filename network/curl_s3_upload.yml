@@ -1,0 +1,21 @@
+title: Data Exfiltration via curl to S3 Bucket
+id: 8e3a2b9f-1d75-4669-8e02-e4b3efdf7f53
+status: experimental
+description: Detects usage of curl to POST or PUT data to a suspicious S3 bucket, often used for exfil
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  category: process_creation
+  product: linux
+detection:
+  selection:
+    Image|endswith: curl
+    CommandLine|contains:
+      - "s3.amazonaws.com"
+      - "put"
+      - "--upload-file"
+  condition: selection
+level: high
+tags:
+  - attack.exfiltration
+  - attack.t1048
