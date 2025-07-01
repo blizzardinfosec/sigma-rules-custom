@@ -1,0 +1,20 @@
+title: Attempt to Read /etc/shadow File
+id: 302df89e-1ab6-41b7-a39c-d1f16bb3a112
+status: stable
+description: Detects command attempts to read the /etc/shadow file which contains password hashes
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  category: process_creation
+  product: linux
+detection:
+  keywords:
+    CommandLine|contains:
+      - "cat /etc/shadow"
+      - "less /etc/shadow"
+      - "grep '' /etc/shadow"
+  condition: keywords
+level: critical
+tags:
+  - attack.credential_access
+  - attack.t1003.008
