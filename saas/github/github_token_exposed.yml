@@ -1,0 +1,20 @@
+title: GitHub Token Possibly Exposed in Command Line
+id: 5d4e769c-e153-47f3-8b34-3823b89bb0ec
+status: experimental
+description: Detects possible accidental exposure of a GitHub token in shell history or commands
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  product: linux
+  category: process_creation
+detection:
+  selection:
+    CommandLine|contains:
+      - "ghp_"
+      - "github_pat_"
+  condition: selection
+level: medium
+tags:
+  - attack.credential_access
+  - github
+  - data_leak
