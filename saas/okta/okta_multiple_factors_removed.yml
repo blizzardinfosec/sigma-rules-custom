@@ -1,1 +1,20 @@
-
+title: Multiple MFA Factors Removed in Short Time Window
+id: 2a4c98d3-269f-4b0a-83ed-bc37303ef2fa
+status: experimental
+description: Detects users removing more than one MFA factor within 5 minutes — a potential account compromise indicator
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  product: okta
+  service: system
+  category: iam
+detection:
+  mfa_event:
+    eventType: user.factor.deactivate
+  timeframe: 5m
+  condition: |
+    mfa_event | count() by actor.alternateId > 1
+level: high
+tags:
+  - attack.credential_access
+  - attack.persistence
