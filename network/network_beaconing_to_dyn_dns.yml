@@ -1,0 +1,21 @@
+title: Outbound Network Connections to Dynamic DNS Domains
+id: e96418c5-0f71-412f-bf84-e59fe42ccbbc
+status: experimental
+description: Detects suspicious outbound traffic to common dynamic DNS providers, often used in C2 channels
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  product: network
+  category: connection
+detection:
+  ddns_domains:
+    DestinationHostname|endswith:
+      - .duckdns.org
+      - .no-ip.org
+      - .dynu.com
+      - .hopto.org
+  condition: ddns_domains
+level: high
+tags:
+  - attack.command_and_control
+  - attack.t1071.001
