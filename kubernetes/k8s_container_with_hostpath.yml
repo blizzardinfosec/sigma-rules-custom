@@ -1,0 +1,17 @@
+title: Kubernetes Pod Using HostPath Volume (Potential Escape Risk)
+id: f8e6bfc8-524c-4dfb-93c9-fb5c6beed48b
+status: stable
+description: Detects pods mounting hostPath volumes — can lead to container breakout or privilege escalation
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  product: kubernetes
+  category: audit
+detection:
+  selection:
+    requestObject.spec.volumes.hostPath.path|startswith: /
+  condition: selection
+level: high
+tags:
+  - attack.privilege_escalation
+  - attack.t1611
