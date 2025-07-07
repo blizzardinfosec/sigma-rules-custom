@@ -1,0 +1,18 @@
+title: Suspicious LaunchAgent Created in User Directory
+id: 974c44c5-c1ef-443c-9508-089a7e2c47dc
+status: experimental
+description: Detects creation of LaunchAgent plist in a user's Library folder — commonly abused for persistence
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  product: macos
+  category: file_event
+detection:
+  selection:
+    TargetFileName|contains: /Library/LaunchAgents/
+    TargetFileName|endswith: .plist
+  condition: selection
+level: medium
+tags:
+  - attack.persistence
+  - attack.t1543.001
