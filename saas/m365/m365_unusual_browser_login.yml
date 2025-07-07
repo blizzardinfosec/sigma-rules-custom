@@ -1,0 +1,20 @@
+title: Unusual Browser Login to Microsoft 365 Account
+id: b5f8b617-7be2-4b17-a038-d92859e1e6c7
+status: experimental
+description: Detects login from a browser or client not previously associated with the user
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  product: m365
+  service: azuread
+  category: authentication
+detection:
+  selection:
+    ClientAppUsed|in: ['Other', 'Browser']
+    RiskLevelDuringSignIn: 'high'
+  condition: selection
+level: high
+tags:
+  - attack.initial_access
+  - anomaly
+  - m365
