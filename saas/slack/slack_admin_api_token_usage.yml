@@ -1,0 +1,21 @@
+title: Slack Admin Token Used for Sensitive API Calls
+id: 1598d5b2-c0a4-44d6-897a-d54c263ae063
+status: experimental
+description: Detects use of Slack admin-level token to execute sensitive management APIs (e.g. user disablement, auth test, file deletion)
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  product: slack
+  category: api
+detection:
+  selection:
+    method|in:
+      - users.admin.setInactive
+      - auth.test
+      - files.delete
+    token_scope|contains: admin
+  condition: selection
+level: medium
+tags:
+  - attack.credential_access
+  - attack.impact
