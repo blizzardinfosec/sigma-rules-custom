@@ -1,0 +1,22 @@
+title: PowerShell Command Using WebClient + Encoded Payload
+id: b244ff1f-93c2-45a4-823b-d080a46b389e
+status: stable
+description: Detects suspicious PowerShell usage of WebClient object and encoded payloads — common in fileless malware
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    Image|endswith: \powershell.exe
+    CommandLine|contains:
+      - "New-Object"
+      - "System.Net.WebClient"
+      - "-EncodedCommand"
+  condition: selection
+level: high
+tags:
+  - attack.execution
+  - attack.defense_evasion
+  - attack.t1059.001
