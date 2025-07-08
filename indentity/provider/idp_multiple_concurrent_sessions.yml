@@ -1,0 +1,19 @@
+title: Multiple Concurrent SSO Sessions from Distant Geographies
+id: e6aa0bb5-443f-4c9e-85a9-6a7b3a2c6834
+status: experimental
+description: Detects the same user establishing active IdP sessions from geographically distant IPs within minutes — potential token theft or session hijack
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  product: identity_provider
+  category: authentication
+detection:
+  selection:
+    eventType: user.session.start
+  timeframe: 10m
+  condition: |
+    selection | group_by: actor.email | where: geodistance(srcIp) > 1500km
+level: high
+tags:
+  - attack.credential_access
+  - attack.persistence
