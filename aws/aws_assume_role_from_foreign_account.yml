@@ -1,0 +1,23 @@
+title: Suspicious AWS AssumeRole from Unknown External Account
+id: 71cfb91c-95fc-4d1f-90db-1b95d7131ab2
+status: stable
+description: Detects usage of AssumeRole into the account from an external AWS account that is not part of the org
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  product: aws
+  service: cloudtrail
+  category: iam
+detection:
+  selection:
+    eventName: AssumeRole
+    userIdentity.type: "AssumedRole"
+    userIdentity.accountId|not_in:
+      - "111111111111"  # Add known trusted account IDs
+      - "222222222222"
+  condition: selection
+level: high
+tags:
+  - attack.persistence
+  - attack.t1078.004
+  - aws
