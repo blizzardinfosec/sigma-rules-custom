@@ -1,0 +1,19 @@
+title: 2FA Method Removed from Google Account
+id: 412c750d-55a0-4d68-8571-33038e0d394e
+status: stable
+description: Detects removal of 2FA method from a user account — common persistence technique after credential compromise
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  product: google_workspace
+  service: admin
+  category: iam
+detection:
+  selection:
+    event_name: REMOVE_2SV
+  condition: selection
+level: high
+tags:
+  - attack.credential_access
+  - attack.persistence
+  - attack.t1556.006
