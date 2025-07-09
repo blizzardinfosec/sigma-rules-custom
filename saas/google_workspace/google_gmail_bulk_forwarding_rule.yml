@@ -1,0 +1,23 @@
+title: Suspicious Bulk Forwarding Rule Created in Gmail
+id: 7df82d86-cc18-4e7b-8c63-5a57b7c24d0e
+status: stable
+description: Detects creation of Gmail filter that automatically forwards all emails to an external address
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  product: google_workspace
+  service: gmail
+  category: configuration
+detection:
+  selection:
+    event_name: CREATE_FILTER
+    parameters.forward_to|endswith:
+      - "@protonmail.com"
+      - "@gmail.com"
+      - "@outlook.com"
+  condition: selection
+level: high
+tags:
+  - attack.exfiltration
+  - attack.persistence
+  - attack.t1114.003
