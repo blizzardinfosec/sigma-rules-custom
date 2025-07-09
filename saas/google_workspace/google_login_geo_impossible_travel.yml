@@ -1,0 +1,21 @@
+title: Impossible Travel Between Login Locations
+id: bfe2d28d-28c1-4c4f-b73c-2aa2500c80a1
+status: experimental
+description: Detects multiple logins from the same user across distant locations in a short time window
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  product: google_workspace
+  service: login
+  category: authentication
+detection:
+  selection:
+    event_name: LOGIN_SUCCESS
+  timeframe: 15m
+  condition: |
+    selection | group_by: actor.email | where: geodistance(ip_address) > 1500km
+level: high
+tags:
+  - attack.credential_access
+  - attack.t1078
+  - anomaly
