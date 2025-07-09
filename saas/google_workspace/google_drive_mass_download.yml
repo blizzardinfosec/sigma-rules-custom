@@ -1,0 +1,20 @@
+title: Mass Download of Files from Google Drive
+id: c6d2ac1f-0ad7-4be1-a97a-9092762a4d0a
+status: stable
+description: Detects unusual volume of file downloads from a single user — often a sign of data exfiltration
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  product: google_workspace
+  service: drive
+  category: data_access
+detection:
+  download:
+    event_name: DOWNLOAD
+  timeframe: 10m
+  condition: |
+    download | count() by actor.email > 100
+level: high
+tags:
+  - attack.exfiltration
+  - attack.t1537
