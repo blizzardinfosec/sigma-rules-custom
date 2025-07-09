@@ -1,0 +1,20 @@
+title: Admin Role Granted to User in Google Workspace
+id: 701fe9db-24c1-4200-a3a7-8c98b2b93d2b
+status: stable
+description: Detects assignment of admin roles to a user account — often a privilege escalation attempt or misconfiguration
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  product: google_workspace
+  service: admin
+  category: iam
+detection:
+  selection:
+    event_name: ASSIGN_ROLE
+    parameters.role_name|contains: admin
+  condition: selection
+level: high
+tags:
+  - attack.privilege_escalation
+  - attack.persistence
+  - attack.t1078
