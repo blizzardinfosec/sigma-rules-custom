@@ -1,0 +1,20 @@
+title: Drive File Shared with External Domain
+id: ed11f1e0-cd33-4f5c-98a9-c4b2a27075f6
+status: stable
+description: Detects when a file is explicitly shared with a user outside the organization’s domain
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  product: google_workspace
+  service: drive
+  category: data_access
+detection:
+  selection:
+    event_name: ACL_CHANGE
+    parameters.visibility: "external"
+    parameters.shared_with_domain|not_endswith: "@yourcompany.com"
+  condition: selection
+level: medium
+tags:
+  - attack.exfiltration
+  - attack.t1537
