@@ -1,0 +1,19 @@
+title: Admin Reset 2FA for Another User
+id: 2c78f7df-7a45-4882-b2ae-761dbf6b0ad1
+status: stable
+description: Detects when an admin disables or resets 2FA for a user, a common support action that could be abused
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  product: google_workspace
+  service: admin
+  category: iam
+detection:
+  selection:
+    event_name: RESET_2SV
+  condition: selection
+level: medium
+tags:
+  - attack.credential_access
+  - attack.persistence
+  - google_workspace
