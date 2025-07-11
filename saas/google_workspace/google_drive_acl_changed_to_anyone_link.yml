@@ -1,0 +1,19 @@
+title: Drive File Shared Publicly via Anyone With Link
+id: 0e60e146-d893-4022-8edc-99e3fc45dd11
+status: stable
+description: Detects when a file's sharing permissions are changed to public link access — often used for accidental or intentional data leakage
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  product: google_workspace
+  service: drive
+  category: configuration
+detection:
+  selection:
+    event_name: ACL_CHANGE
+    parameters.visibility: "anyoneWithLink"
+  condition: selection
+level: high
+tags:
+  - attack.exfiltration
+  - attack.t1537
