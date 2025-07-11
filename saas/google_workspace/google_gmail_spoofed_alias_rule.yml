@@ -1,0 +1,24 @@
+title: Gmail Filter Created to Auto-Label Spoofed Emails
+id: 40f9cf7b-c7bc-4aa2-b1e3-6a4fc5e4f74e
+status: experimental
+description: Detects a filter rule that silently labels or archives emails pretending to be from execs (executive spoofing)
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  product: google_workspace
+  service: gmail
+  category: configuration
+detection:
+  selection:
+    event_name: CREATE_FILTER
+    parameters.from|contains:
+      - ceo@
+      - finance@
+      - cfo@
+    parameters.action: "archive"
+  condition: selection
+level: medium
+tags:
+  - attack.initial_access
+  - attack.t1566.002
+  - email
