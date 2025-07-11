@@ -1,0 +1,23 @@
+title: OAuth App Granted Sensitive Scope in Google Workspace
+id: 8a6fd674-bd30-4c73-a71b-31fe8b7e1497
+status: experimental
+description: Detects when a user grants OAuth access to a 3rd-party app with elevated permissions like Gmail or Drive read/write
+author: blizzardinfosec
+date: 2025-06-21
+logsource:
+  product: google_workspace
+  service: admin
+  category: iam
+detection:
+  selection:
+    event_name: AUTHORIZE_APP
+    parameters.scope|contains:
+      - https://www.googleapis.com/auth/gmail.readonly
+      - https://www.googleapis.com/auth/drive
+      - https://www.googleapis.com/auth/admin.directory.user
+  condition: selection
+level: high
+tags:
+  - attack.persistence
+  - attack.t1550.001
+  - google_workspace
